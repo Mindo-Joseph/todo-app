@@ -65,7 +65,7 @@ const newTask = () => {
   taskForm.appendChild(priorityList);
   taskForm.appendChild(submit);
   taskdiv.appendChild(taskForm);
-  const todoSection = document.getElementsByClassName('toDo');
+  const todoSection = document.getElementById('toDo');
   todoSection.appendChild(taskdiv);
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
@@ -78,6 +78,7 @@ const main = () => {
   tasksWrapper.className = 'taskWrapper';
   const toDo = document.createElement('div');
   toDo.className = 'toDo';
+  toDo.id = 'toDo';
   // Section Headers
   // ToDo section
   const toDoHeader = document.createElement('div');
@@ -151,7 +152,6 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  newTask();
 };
 
 export default createpage;

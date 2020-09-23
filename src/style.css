@@ -177,8 +177,14 @@ textarea {
 .main-header {
   display: flex;
 }
-.done, .in-progress, .toDo {
+.done, .in-progress {
   display: flex;
+  text-align: center;
+}
+.toDo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 .new-task {
   box-sizing: border-box;
