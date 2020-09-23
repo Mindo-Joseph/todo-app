@@ -65,8 +65,8 @@ const newTask = () => {
   taskForm.appendChild(priorityList);
   taskForm.appendChild(submit);
   taskdiv.appendChild(taskForm);
-  const mainSection = document.getElementById('main');
-  mainSection.appendChild(taskdiv);
+  const todoSection = document.getElementsByClassName('toDo');
+  todoSection.appendChild(taskdiv);
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
