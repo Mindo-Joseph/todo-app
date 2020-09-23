@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "firebase": "^7.21.0"
+    "firebase": "^7.21.0",
+    "js-datepicker": "^5.16.0"
   }
 }
