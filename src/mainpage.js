@@ -1,5 +1,3 @@
-import datepicker from 'js-datepicker';
-
 import createproject from './projectsetup';
 import createtask from './taskcreation';
 
@@ -45,7 +43,6 @@ const newTask = () => {
   const dueDate = document.createElement('input');
   dueDate.id = 'dateSelect';
   dueDate.setAttribute('type', 'date');
-  // const pick = datepicker(dueDate);
   const priorityArray = ['High', 'Medium', 'Low'];
   const priorityList = document.createElement('select');
   priorityList.id = 'mySelect';
@@ -57,10 +54,10 @@ const newTask = () => {
   }
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
+  submit.textContent = 'Create';
   submit.onclick = createtask(taskName.value,
     taskdescription.value, dueDate.value,
     priorityList.value);
-  submit.textContent = 'Create';
   taskForm.appendChild(headTag);
   taskForm.appendChild(taskName);
   taskForm.appendChild(taskdescription);
@@ -70,6 +67,8 @@ const newTask = () => {
   taskdiv.appendChild(taskForm);
   const mainSection = document.getElementById('main');
   mainSection.appendChild(taskdiv);
+  const disableButton = document.getElementById('new-task');
+  disableButton.removeEventListener('click', newTask);
 };
 const main = () => {
   const todoItemsSection = document.createElement('div');
@@ -87,8 +86,9 @@ const main = () => {
   todoTitle.textContent = 'ToDo';
   const newtoDo = document.createElement('button');
   newtoDo.className = 'new-task';
+  newtoDo.id = 'new-task';
   newtoDo.textContent = 'New Task';
-  newtoDo.onclick = newTask
+  newtoDo.addEventListener('click', newTask);
   toDoHeader.appendChild(todoTitle);
   toDo.appendChild(toDoHeader);
   toDo.appendChild(newtoDo);
