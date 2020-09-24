@@ -177,7 +177,7 @@ eval("var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtim
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst createtask = (taskname, description, date, priority) => ({\n  taskname,\n  description,\n  date,\n  priority,\n\n  // setTask() {\n  //   this.taskname = taskname;\n  //   this.description = description;\n  //   this.date = date;\n  //   this.priority = priority;\n  //   return this;\n  // },\n});\n/* harmony default export */ __webpack_exports__[\"default\"] = (createtask);\n\n\n//# sourceURL=webpack:///./src/taskcreation.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst createtask = (taskname, description, date, priority) => ({\n  taskname,\n  description,\n  date,\n  priority,\n});\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (createtask);\n\n\n//# sourceURL=webpack:///./src/taskcreation.js?");
 
 /***/ })
 

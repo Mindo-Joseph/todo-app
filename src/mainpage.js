@@ -4,18 +4,23 @@ import createtask from './taskcreation';
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
   formdiv.className = 'project-form';
+
   const headTag = document.createElement('h1');
   headTag.textContent = 'New Project';
+
   const content = document.getElementById('content');
+
   const projectSection = document.querySelector('.project-view');
   projectSection.appendChild(formdiv);
   content.appendChild(projectSection);
 
   const messageForm = document.createElement('form');
   messageForm.className = 'form';
+
   const name = document.createElement('input');
   name.setAttribute('type', 'text');
   name.setAttribute('placeholder', 'project name');
+
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
   submit.onclick = createproject(name.value);
@@ -24,25 +29,32 @@ const newProjectForm = () => {
   messageForm.appendChild(name);
   messageForm.appendChild(submit);
   formdiv.appendChild(messageForm);
+
   const addIcon = document.getElementById('add');
   addIcon.removeEventListener('click', newProjectForm);
 };
 const newTask = () => {
   const taskdiv = document.createElement('div');
   taskdiv.className = 'project-form';
+
   const headTag = document.createElement('h1');
   headTag.textContent = 'New Task';
+
   const taskForm = document.createElement('form');
   taskForm.className = 'form';
+
   const taskName = document.createElement('input');
   taskName.setAttribute('type', 'text');
   taskName.setAttribute('placeholder', 'task name');
+
   const taskdescription = document.createElement('input');
   taskdescription.setAttribute('type', 'text');
   taskdescription.setAttribute('placeholder', 'Description');
+
   const dueDate = document.createElement('input');
   dueDate.id = 'dateSelect';
   dueDate.setAttribute('type', 'date');
+
   const priorityArray = ['High', 'Medium', 'Low'];
   const priorityList = document.createElement('select');
   priorityList.id = 'mySelect';
@@ -52,6 +64,7 @@ const newTask = () => {
     option.text = priorityArray[i];
     priorityList.appendChild(option);
   }
+
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
@@ -65,8 +78,10 @@ const newTask = () => {
   taskForm.appendChild(priorityList);
   taskForm.appendChild(submit);
   taskdiv.appendChild(taskForm);
+
   const todoSection = document.getElementById('toDo');
   todoSection.appendChild(taskdiv);
+
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
@@ -74,8 +89,10 @@ const main = () => {
   const todoItemsSection = document.createElement('div');
   todoItemsSection.className = 'main';
   todoItemsSection.id = 'main';
+
   const tasksWrapper = document.createElement('div');
   tasksWrapper.className = 'taskWrapper';
+
   const toDo = document.createElement('div');
   toDo.className = 'toDo';
   toDo.id = 'toDo';
@@ -83,8 +100,10 @@ const main = () => {
   // ToDo section
   const toDoHeader = document.createElement('div');
   toDoHeader.className = 'main-header';
+
   const todoTitle = document.createElement('h4');
   todoTitle.textContent = 'ToDo';
+
   const newtoDo = document.createElement('button');
   newtoDo.className = 'new-task';
   newtoDo.id = 'new-task';
@@ -96,8 +115,10 @@ const main = () => {
   // InProgress Section
   const inProgress = document.createElement('div');
   inProgress.className = 'in-progress';
+
   const progressHeader = document.createElement('div');
   progressHeader.className = 'main-header';
+
   const progressTitle = document.createElement('h4');
   progressTitle.textContent = 'In Progress';
   progressHeader.appendChild(progressTitle);
@@ -105,10 +126,13 @@ const main = () => {
   // Done
   const done = document.createElement('div');
   done.className = 'done';
+
   const doneHeader = document.createElement('div');
   doneHeader.className = 'main-header';
+
   const doneTitle = document.createElement('h4');
   doneTitle.textContent = 'Done';
+
   const newdone = document.createElement('button');
   newdone.className = 'new-task';
   newdone.textContent = 'New Task';
@@ -119,10 +143,70 @@ const main = () => {
   tasksWrapper.appendChild(inProgress);
   tasksWrapper.appendChild(done);
   todoItemsSection.appendChild(tasksWrapper);
+
   const content = document.querySelector('#content');
   content.appendChild(todoItemsSection);
 };
+const todoCard = (todo) => {
+  const todoCardsList = document.createElement('ul');
+  todoCardsList.className = 'todo-list';
+  todoCardsList.id = 'target';
+  todoCardsList.ondragstart = '';
 
+  const todoItem = document.createElement('li');
+  todoItem.className = 'todo-item high';
+  todoItem.draggable = 'true';
+
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const cardTitle = document.createElement('h3');
+  cardTitle.className = 'todo-title';
+
+  const action = document.createElement('span');
+  action.className = 'action';
+
+  const deleteIcon = document.createElement('i');
+  deleteIcon.textContent = 'Delete';
+  deleteIcon.className = 'material-icons md-36 icon-delete';
+
+  const unchecked = document.createElement('i');
+  unchecked.className = 'icon-checkbox-outline material-icons md-36 md-dark';
+  unchecked.textContent = 'check_box_outline_dark';
+
+  const checked = document.createElement('i');
+  checked.className = 'icon-checkbox material-icons md-36 md-light';
+
+  const title = document.createElement('span');
+  title.textContent = `${todo.taskName}`;
+  title.className = 'title';
+  action.appendChild(deleteIcon);
+  action.appendChild(unchecked);
+  action.appendChild(checked);
+  action.appendChild(title);
+  cardTitle.appendChild(action);
+
+  const description = document.createElement('p');
+  description.className = 'todo-description';
+  description.textContent = `${todo.description}`;
+
+  const priority = document.createElement('span');
+  priority.className = 'todo-priority';
+  priority.textContent = `${todo.priority}`;
+
+  card.appendChild(cardTitle);
+  card.appendChild(description);
+  card.appendChild(priority);
+
+  todoItem.appendChild(card);
+  todoCardsList.appendChild(todoItem);
+
+  const todoDiv = document.querySelector('.toDo');
+  todoDiv.appendChild(todoCardsList);
+};
+const populatetoDosList = (todos) => {
+  todos.forEach((item) => todoCard(item));
+};
 const createpage = () => {
   const sidebar = document.createElement('div');
   sidebar.className = 'side-bar';
@@ -152,6 +236,7 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
+  populatetoDosList();
 };
 
 export default createpage;
