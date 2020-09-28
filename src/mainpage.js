@@ -52,14 +52,17 @@ const newTask = () => {
   const taskName = document.createElement('input');
   taskName.setAttribute('type', 'text');
   taskName.setAttribute('placeholder', 'task name');
+  taskName.required = true;
 
   const taskdescription = document.createElement('input');
   taskdescription.setAttribute('type', 'text');
   taskdescription.setAttribute('placeholder', 'Description');
+  taskdescription.required = true;
 
   const dueDate = document.createElement('input');
   dueDate.id = 'dateSelect';
   dueDate.setAttribute('type', 'date');
+  dueDate.required = true;
 
   const priorityArray = ['High', 'Medium', 'Low'];
 
@@ -75,9 +78,9 @@ const newTask = () => {
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
-  submit.addEventListener('click', createtask(tasks, taskName.value,
-    taskdescription.value, dueDate.value,
-    priorityList.value));
+  submit.addEventListener('click', () => {
+    todoCard(createtask(taskName.value, taskdescription.value, dueDate.value, priorityList.value));
+  });
 
   taskForm.appendChild(headTag);
   taskForm.appendChild(taskName);
@@ -183,6 +186,8 @@ const todoCard = (todo) => {
 
   const deleteTask = document.createElement('i');
   deleteTask.className = 'fas fa-trash';
+  // deleteTask.addEventListener('click', deletetask);
+
   action.appendChild(checkbox);
   action.appendChild(title);
   action.appendChild(deleteTask);
