@@ -1,6 +1,12 @@
 import createproject from './projectsetup';
 import createtask from './taskcreation';
 
+const tasks = [{
+  taskname: 'Joe',
+  description: 'some',
+  date: 'more',
+  priority: '12-2-1020',
+}];
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
   formdiv.className = 'project-form';
@@ -56,6 +62,7 @@ const newTask = () => {
   dueDate.setAttribute('type', 'date');
 
   const priorityArray = ['High', 'Medium', 'Low'];
+
   const priorityList = document.createElement('select');
   priorityList.id = 'mySelect';
   for (let i = 0; i < priorityArray.length; i += 1) {
@@ -68,9 +75,10 @@ const newTask = () => {
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
-  submit.onclick = createtask(taskName.value,
+  submit.addEventListener('click', createtask(tasks, taskName.value,
     taskdescription.value, dueDate.value,
-    priorityList.value);
+    priorityList.value));
+
   taskForm.appendChild(headTag);
   taskForm.appendChild(taskName);
   taskForm.appendChild(taskdescription);
@@ -154,7 +162,7 @@ const todoCard = (todo) => {
   todoCardsList.ondragstart = '';
 
   const todoItem = document.createElement('li');
-  todoItem.className = 'todo-item high';
+  todoItem.className = 'todo-item';
   todoItem.draggable = 'true';
 
   const card = document.createElement('div');
@@ -166,33 +174,27 @@ const todoCard = (todo) => {
   const action = document.createElement('span');
   action.className = 'action';
 
-  const deleteIcon = document.createElement('i');
-  deleteIcon.textContent = 'Delete';
-  deleteIcon.className = 'material-icons md-36 icon-delete';
-
-  const unchecked = document.createElement('i');
-  unchecked.className = 'icon-checkbox-outline material-icons md-36 md-dark';
-  unchecked.textContent = 'check_box_outline_dark';
-
-  const checked = document.createElement('i');
-  checked.className = 'icon-checkbox material-icons md-36 md-light';
+  const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
 
   const title = document.createElement('span');
-  title.textContent = `${todo.taskName}`;
+  title.textContent = `To-Do: ${todo.taskname}`;
   title.className = 'title';
-  action.appendChild(deleteIcon);
-  action.appendChild(unchecked);
-  action.appendChild(checked);
+
+  const deleteTask = document.createElement('i');
+  deleteTask.className = 'fas fa-trash';
+  action.appendChild(checkbox);
   action.appendChild(title);
+  action.appendChild(deleteTask);
   cardTitle.appendChild(action);
 
   const description = document.createElement('p');
   description.className = 'todo-description';
-  description.textContent = `${todo.description}`;
+  description.textContent = `Desc: ${todo.description}`;
 
   const priority = document.createElement('span');
   priority.className = 'todo-priority';
-  priority.textContent = `${todo.priority}`;
+  priority.textContent = `Priority: ${todo.priority}`;
 
   card.appendChild(cardTitle);
   card.appendChild(description);
@@ -236,7 +238,7 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  populatetoDosList();
+  populatetoDosList(tasks);
 };
 
 export default createpage;
