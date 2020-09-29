@@ -30,4 +30,3 @@ export const deleteTask = () => {
 //   toDo.appendChild(task);
 //   // taskEvents(task, completedTask);
 // };
-

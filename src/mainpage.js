@@ -1,12 +1,7 @@
 import createproject from './projectsetup';
-import {createtask, deleteTask} from './taskcreation';
+import { createtask, deleteTask } from './taskcreation';
 
-const tasks = [{
-  taskname: 'Joe',
-  description: 'some',
-  date: 'more',
-  priority: '12-2-1020',
-}];
+const tasks = [];
 
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
@@ -80,10 +75,13 @@ const newTask = () => {
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
   submit.addEventListener('click', () => {
-    createtask(tasks,
-      taskName.value, taskdescription.value, dueDate.value, priorityList.value);
+    const task = createtask(
+      taskName.value, taskdescription.value, dueDate.value, priorityList.value,
+    );
+    const taskers = JSON.parse(localStorage.getItem('todos')) || [];
+    taskers.push(task);
+    localStorage.setItem('todos', JSON.stringify(taskers));
   });
-  console.log(tasks);
 
   taskForm.appendChild(headTag);
   taskForm.appendChild(taskName);
@@ -217,8 +215,10 @@ const todoCard = (todo) => {
   const todoDiv = document.querySelector('.toDo');
   todoDiv.appendChild(todoCardsList);
 };
-const populatetoDosList = (todos) => {
-  todos.forEach((item) => todoCard(item));
+const populatetoDosList = () => {
+  for (let i = 0; i < JSON.parse(Object.values(localStorage)).length; i += 1) {
+    todoCard(JSON.parse(Object.values(localStorage))[i]);
+  }
 };
 const createpage = () => {
   const sidebar = document.createElement('div');
@@ -249,7 +249,7 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  populatetoDosList(tasks);
+  populatetoDosList();
 };
 
 export default createpage;
