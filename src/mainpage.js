@@ -1,5 +1,5 @@
 import createproject from './projectsetup';
-import createtask from './taskcreation';
+import {createtask, deleteTask} from './taskcreation';
 
 const tasks = [{
   taskname: 'Joe',
@@ -7,6 +7,7 @@ const tasks = [{
   date: 'more',
   priority: '12-2-1020',
 }];
+
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
   formdiv.className = 'project-form';
@@ -79,8 +80,10 @@ const newTask = () => {
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
   submit.addEventListener('click', () => {
-    todoCard(createtask(taskName.value, taskdescription.value, dueDate.value, priorityList.value));
+    createtask(tasks,
+      taskName.value, taskdescription.value, dueDate.value, priorityList.value);
   });
+  console.log(tasks);
 
   taskForm.appendChild(headTag);
   taskForm.appendChild(taskName);
@@ -184,13 +187,16 @@ const todoCard = (todo) => {
   title.textContent = `To-Do: ${todo.taskname}`;
   title.className = 'title';
 
-  const deleteTask = document.createElement('i');
-  deleteTask.className = 'fas fa-trash';
-  // deleteTask.addEventListener('click', deletetask);
+  const taskDelete = document.createElement('i');
+  taskDelete.className = 'fas fa-trash';
+  taskDelete.id = 'deletebtn';
+  taskDelete.onclick = () => {
+    deleteTask();
+  };
 
   action.appendChild(checkbox);
   action.appendChild(title);
-  action.appendChild(deleteTask);
+  action.appendChild(taskDelete);
   cardTitle.appendChild(action);
 
   const description = document.createElement('p');
