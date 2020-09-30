@@ -162,7 +162,7 @@ const main = () => {
   const content = document.querySelector('#content');
   content.appendChild(todoItemsSection);
 };
-const todoCard = (todo) => {
+const todoCard = (todo, target) => {
   const todoItem = document.createElement('li');
   todoItem.className = 'todo-item';
   todoItem.draggable = 'true';
@@ -175,28 +175,36 @@ const todoCard = (todo) => {
 
   const action = document.createElement('span');
   action.className = 'action';
-
-  const checkbox = document.createElement('input');
-  checkbox.setAttribute('type', 'checkbox');
-  checkbox.addEventListener('change', (event) => {
-    if (event.target.checked) {
-      const done = document.querySelector('.done');
-      done.appendChild(todoItem);
-      // const list = document.querySelector('.todo-list');
-      // list.removeChild(todoItem);
-    }
-  });
-
   const title = document.createElement('span');
   title.textContent = `${todo.taskname}`;
   title.className = 'title';
-
+  title.id = 'taskTitle';
   const taskDelete = document.createElement('i');
   taskDelete.className = 'fas fa-trash';
   taskDelete.id = 'deletebtn';
   taskDelete.onclick = () => {
     deleteTask();
   };
+  const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
+  checkbox.addEventListener('change', (event) => {
+    if (event.target.checked) {
+      const todos = JSON.parse(localStorage.getItem('todos'));
+      for (let i = 0; i < todos.length; i += 1) {
+        if (todos[i].taskname === title.textContent) {
+          const done = JSON.parse(localStorage.getItem('done')) || [];
+          done.push(todos[i]);
+          localStorage.setItem('done', JSON.stringify(done));
+          todos.splice(i, 1);
+          i -= 1;
+        }
+      }
+      const done = document.querySelector('.done');
+      done.appendChild(todoItem);
+      // const list = document.querySelector('.todo-list');
+      // list.removeChild(todoItem);
+    }
+  });
 
   action.appendChild(checkbox);
   action.appendChild(title);
@@ -207,7 +215,7 @@ const todoCard = (todo) => {
   description.className = 'todo-description';
   description.textContent = `Desc: ${todo.description}`;
   const due = document.createElement('p');
-  due.textContent = `Due on: ${todo.date}`;
+  due.textContent = `${todo.date}`;
   const priority = document.createElement('span');
   priority.className = 'todo-priority';
   priority.textContent = `Priority: ${todo.priority}`;
@@ -218,15 +226,16 @@ const todoCard = (todo) => {
   card.appendChild(priority);
 
   todoItem.appendChild(card);
-  const todoCardsList = document.querySelector('#target');
+  const todoCardsList = document.querySelector(`${target}`);
   todoCardsList.appendChild(todoItem);
 
   // const todoDiv = document.querySelector('.toDo');
   // todoDiv.appendChild(todoCardsList);
 };
-const populatetoDosList = () => {
-  for (let i = 0; i < JSON.parse(Object.values(localStorage)).length; i += 1) {
-    todoCard(JSON.parse(Object.values(localStorage))[i]);
+const populatetoDosList = (items, target) => {
+  const obj = JSON.parse(localStorage.getItem(`${items}`) || []);
+  for (let i = 0; i < obj.length; i += 1) {
+    todoCard(obj[i], `${target}`);
   }
 };
 const createpage = () => {
@@ -258,7 +267,8 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  populatetoDosList();
+  populatetoDosList('todos', '#target');
+  populatetoDosList('done', '.done');
 };
 
 export default createpage;
