@@ -126,7 +126,7 @@ transition: transform 0.4s ease;
 .form, .todo-item{
   max-width: 30rem;
   margin: 0 auto;
-  padding: 1.5rem 2rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
