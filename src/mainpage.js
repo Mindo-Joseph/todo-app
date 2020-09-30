@@ -1,8 +1,6 @@
 import createproject from './projectsetup';
 import { createtask, deleteTask } from './taskcreation';
 
-const tasks = [];
-
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
   formdiv.className = 'project-form';
@@ -97,6 +95,7 @@ const newTask = () => {
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
+
 const main = () => {
   const todoItemsSection = document.createElement('div');
   todoItemsSection.className = 'main';
@@ -124,17 +123,10 @@ const main = () => {
   toDoHeader.appendChild(todoTitle);
   toDo.appendChild(toDoHeader);
   toDo.appendChild(newtoDo);
-  // InProgress Section
-  const inProgress = document.createElement('div');
-  inProgress.className = 'in-progress';
 
   const progressHeader = document.createElement('div');
   progressHeader.className = 'main-header';
 
-  const progressTitle = document.createElement('h4');
-  progressTitle.textContent = 'In Progress';
-  progressHeader.appendChild(progressTitle);
-  inProgress.appendChild(progressHeader);
   // Done
   const done = document.createElement('div');
   done.className = 'done';
@@ -152,7 +144,7 @@ const main = () => {
   done.appendChild(doneHeader);
 
   tasksWrapper.appendChild(toDo);
-  tasksWrapper.appendChild(inProgress);
+
   tasksWrapper.appendChild(done);
   todoItemsSection.appendChild(tasksWrapper);
 
@@ -180,9 +172,19 @@ const todoCard = (todo) => {
 
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
+  checkbox.addEventListener('change', (event) => {
+    if (event.target.checked) {
+      const done = document.querySelector('.done');
+      done.appendChild(card);
+      const list = document.querySelector('.todo-list');
+      while (list.lastElementChild) {
+        list.removeChild(list.lastElementChild);
+      }
+    }
+  });
 
   const title = document.createElement('span');
-  title.textContent = `To-Do: ${todo.taskname}`;
+  title.textContent = `${todo.taskname}`;
   title.className = 'title';
 
   const taskDelete = document.createElement('i');
@@ -200,13 +202,15 @@ const todoCard = (todo) => {
   const description = document.createElement('p');
   description.className = 'todo-description';
   description.textContent = `Desc: ${todo.description}`;
-
+  const due = document.createElement('p');
+  due.textContent = `Due on: ${todo.date}`;
   const priority = document.createElement('span');
   priority.className = 'todo-priority';
   priority.textContent = `Priority: ${todo.priority}`;
 
   card.appendChild(cardTitle);
   card.appendChild(description);
+  card.appendChild(due);
   card.appendChild(priority);
 
   todoItem.appendChild(card);
