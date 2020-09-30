@@ -9,21 +9,22 @@ body {
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 0.1fr 1fr 2fr;
+ display: grid;
+ grid-template-columns: repeat(12, 1fr);
 }
 
 .side-bar {
   background-color: #0b1083;
   height: 100vh;
+  display: grid;
   grid-column: 1/2;
 }
 
 .project-view {
   display: grid;
-  grid-column: 2/3;
-  grid-row: 1/-1;
+  grid-column: 2/5;
   height: 50vh;
+  grid-row: 1/2;
 }
 
 .project-header {
@@ -168,7 +169,7 @@ textarea {
 }
 .main {
   display: grid;
-  grid-column: 3/-1;
+  grid-column: 5/-1;
 }
 .taskWrapper {
   display: flex;
@@ -176,15 +177,21 @@ textarea {
 }
 .main-header {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.done, .in-progress {
+.done {
   display: flex;
   text-align: center;
+  flex-direction: column;
+  flex: 50%;
 }
+
 .toDo {
   text-align: center;
   display: flex;
   flex-direction: column;
+  flex: 50%;
 }
 .new-task {
   box-sizing: border-box;

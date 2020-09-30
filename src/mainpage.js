@@ -120,12 +120,15 @@ const main = () => {
   newtoDo.id = 'new-task';
   newtoDo.textContent = 'New Task';
   newtoDo.addEventListener('click', newTask);
+  const todoCardsList = document.createElement('ul');
+  todoCardsList.className = 'todo-list';
+  todoCardsList.id = 'target';
+  todoCardsList.ondragstart = '';
+
   toDoHeader.appendChild(todoTitle);
   toDo.appendChild(toDoHeader);
   toDo.appendChild(newtoDo);
-
-  const progressHeader = document.createElement('div');
-  progressHeader.className = 'main-header';
+  toDo.appendChild(todoCardsList);
 
   // Done
   const done = document.createElement('div');
@@ -152,11 +155,6 @@ const main = () => {
   content.appendChild(todoItemsSection);
 };
 const todoCard = (todo) => {
-  const todoCardsList = document.createElement('ul');
-  todoCardsList.className = 'todo-list';
-  todoCardsList.id = 'target';
-  todoCardsList.ondragstart = '';
-
   const todoItem = document.createElement('li');
   todoItem.className = 'todo-item';
   todoItem.draggable = 'true';
@@ -177,9 +175,7 @@ const todoCard = (todo) => {
       const done = document.querySelector('.done');
       done.appendChild(card);
       const list = document.querySelector('.todo-list');
-      while (list.lastElementChild) {
-        list.removeChild(list.lastElementChild);
-      }
+      list.removeChild(todoItem);
     }
   });
 
@@ -214,10 +210,11 @@ const todoCard = (todo) => {
   card.appendChild(priority);
 
   todoItem.appendChild(card);
+  const todoCardsList = document.querySelector('#target');
   todoCardsList.appendChild(todoItem);
 
-  const todoDiv = document.querySelector('.toDo');
-  todoDiv.appendChild(todoCardsList);
+  // const todoDiv = document.querySelector('.toDo');
+  // todoDiv.appendChild(todoCardsList);
 };
 const populatetoDosList = () => {
   for (let i = 0; i < JSON.parse(Object.values(localStorage)).length; i += 1) {
