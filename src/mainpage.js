@@ -20,14 +20,22 @@ const newProjectForm = () => {
   const name = document.createElement('input');
   name.setAttribute('type', 'text');
   name.setAttribute('placeholder', 'project name');
-
+  const projectbtns = document.createElement('div');
+  projectbtns.className = 'projectbtns';
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
   submit.onclick = createproject(name.value);
   submit.textContent = 'Create';
+  const cancel = document.createElement('button');
+  cancel.className = 'submit-btn cancel';
+  cancel.textContent = 'Cancel';
+  const buttonsdiv = document.createElement('div');
+  buttonsdiv.className = 'buttonsDiv';
+  buttonsdiv.appendChild(submit);
+  buttonsdiv.appendChild(cancel);
   messageForm.appendChild(headTag);
   messageForm.appendChild(name);
-  messageForm.appendChild(submit);
+  messageForm.appendChild(buttonsdiv);
   formdiv.appendChild(messageForm);
 
   const addIcon = document.getElementById('add');
@@ -173,9 +181,9 @@ const todoCard = (todo) => {
   checkbox.addEventListener('change', (event) => {
     if (event.target.checked) {
       const done = document.querySelector('.done');
-      done.appendChild(card);
-      const list = document.querySelector('.todo-list');
-      list.removeChild(todoItem);
+      done.appendChild(todoItem);
+      // const list = document.querySelector('.todo-list');
+      // list.removeChild(todoItem);
     }
   });
 

@@ -7,7 +7,9 @@
 body {
   font-family: "Poppins", sans-serif;
 }
-
+li {
+  list-style-type: none;
+}
 .content {
  display: grid;
  grid-template-columns: repeat(12, 1fr);
@@ -216,6 +218,13 @@ textarea {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+}
+.buttonsDiv {
+  display: flex;
+  justify-content: space-between;
+}
+.cancel {
+  background-color: #e80c0c;
 }
 ul {
   list-style-type: none;
