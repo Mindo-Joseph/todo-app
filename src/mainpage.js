@@ -1,5 +1,5 @@
 import createproject from './projectsetup';
-import { createtask, deleteTask } from './taskcreation';
+import createtask from './taskcreation';
 
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
@@ -103,7 +103,22 @@ const newTask = () => {
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
-
+const deleteTask = (title) => {
+  const todos = JSON.parse(Object.values(localStorage)[0]);
+  const done = JSON.parse(Object.values(localStorage)[1]);
+  if (todos.some((task) => task.taskname === title.textContent)) {
+    const idx = todos.findIndex((task) => task.taskname === title.textContent);
+    todos.splice(idx, 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    location.reload();
+    return false;
+  }
+  const idx = done.findIndex((task) => task.taskname === title.textContent);
+  done.splice(idx, 1);
+  localStorage.setItem('done', JSON.stringify(done));
+  location.reload();
+  return false;
+};
 const main = () => {
   const todoItemsSection = document.createElement('div');
   todoItemsSection.className = 'main';
@@ -179,12 +194,14 @@ const todoCard = (todo, target) => {
   title.textContent = `${todo.taskname}`;
   title.className = 'title';
   title.id = 'taskTitle';
-  const taskDelete = document.createElement('i');
-  taskDelete.className = 'fas fa-trash';
+  const taskDelete = document.createElement('button');
+  const icon = document.createElement('i');
+  icon.className = 'fas fa-trash';
+  taskDelete.appendChild(icon);
   taskDelete.id = 'deletebtn';
-  taskDelete.onclick = () => {
-    deleteTask();
-  };
+  taskDelete.addEventListener('click', () => {
+    deleteTask(title);
+  });
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
   checkbox.addEventListener('change', (event) => {
