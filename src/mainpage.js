@@ -1,6 +1,12 @@
 import createproject from './projectsetup';
-import createtask from './taskcreation';
+import { createtask, deleteTask } from './taskcreation';
 
+const clearSection = () => {
+  const content = document.querySelector('#target');
+  while (content.firstChild) {
+    content.removeChild(content.lastChild);
+  }
+};
 const newProjectForm = () => {
   const formdiv = document.createElement('div');
   formdiv.className = 'project-form';
@@ -42,6 +48,7 @@ const newProjectForm = () => {
   addIcon.removeEventListener('click', newProjectForm);
 };
 const newTask = () => {
+  clearSection();
   const taskdiv = document.createElement('div');
   taskdiv.className = 'project-form';
 
@@ -103,22 +110,7 @@ const newTask = () => {
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
-const deleteTask = (title) => {
-  const todos = JSON.parse(Object.values(localStorage)[0]);
-  const done = JSON.parse(Object.values(localStorage)[1]);
-  if (todos.some((task) => task.taskname === title.textContent)) {
-    const idx = todos.findIndex((task) => task.taskname === title.textContent);
-    todos.splice(idx, 1);
-    localStorage.setItem('todos', JSON.stringify(todos));
-    location.reload();
-    return false;
-  }
-  const idx = done.findIndex((task) => task.taskname === title.textContent);
-  done.splice(idx, 1);
-  localStorage.setItem('done', JSON.stringify(done));
-  location.reload();
-  return false;
-};
+
 const main = () => {
   const todoItemsSection = document.createElement('div');
   todoItemsSection.className = 'main';
@@ -206,14 +198,14 @@ const todoCard = (todo, target) => {
   checkbox.setAttribute('type', 'checkbox');
   checkbox.addEventListener('change', (event) => {
     if (event.target.checked) {
-      const todos = JSON.parse(localStorage.getItem('todos'));
+      const todos = JSON.parse(localStorage.getItem('todos')) || [];
       for (let i = 0; i < todos.length; i += 1) {
         if (todos[i].taskname === title.textContent) {
           const done = JSON.parse(localStorage.getItem('done')) || [];
           done.push(todos[i]);
           localStorage.setItem('done', JSON.stringify(done));
           todos.splice(i, 1);
-          i -= 1;
+          localStorage.setItem('todos', JSON.stringify(todos));
         }
       }
       const done = document.querySelector('.done');
@@ -245,9 +237,6 @@ const todoCard = (todo, target) => {
   todoItem.appendChild(card);
   const todoCardsList = document.querySelector(`${target}`);
   todoCardsList.appendChild(todoItem);
-
-  // const todoDiv = document.querySelector('.toDo');
-  // todoDiv.appendChild(todoCardsList);
 };
 const populatetoDosList = (items, target) => {
   const obj = JSON.parse(localStorage.getItem(`${items}`) || []);
@@ -275,8 +264,6 @@ const createpage = () => {
   projectIntro.appendChild(headerText);
   projectIntro.appendChild(addIcon);
   projectView.appendChild(projectIntro);
-  // Accordion item
-  // Main section
   const navigation = document.createElement('div');
   navigation.className = 'navigation';
 
