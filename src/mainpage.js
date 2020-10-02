@@ -30,8 +30,14 @@ const newProjectForm = () => {
   projectbtns.className = 'projectbtns';
   const submit = document.createElement('button');
   submit.className = 'submit-btn';
-  submit.onclick = createproject(name.value);
   submit.textContent = 'Create';
+  submit.addEventListener('click', () => {
+    createproject(name.value);
+    const projectsDiv = document.querySelector('.project-view');
+    const display = document.createElement('div');
+    display.textContent = name.value;
+    projectsDiv.appendChild(display);
+  });
   const cancel = document.createElement('button');
   cancel.className = 'submit-btn cancel';
   cancel.textContent = 'Cancel';
