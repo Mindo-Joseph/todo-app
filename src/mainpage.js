@@ -1,6 +1,6 @@
-import createproject from './projectsetup';
-import { createtask, deleteTask } from './taskcreation';
 
+import { createtask, deleteTask } from './taskcreation';
+import {newProject,getProjects} from './test';
 const clearSection = () => {
   const content = document.querySelector('#target');
   while (content.firstChild) {
@@ -32,11 +32,8 @@ const newProjectForm = () => {
   submit.className = 'submit-btn';
   submit.textContent = 'Create';
   submit.addEventListener('click', () => {
-    createproject(name.value);
-    const projectsDiv = document.querySelector('.project-view');
-    const display = document.createElement('div');
-    display.textContent = name.value;
-    projectsDiv.appendChild(display);
+    newProject(name.value);
+    
   });
   const cancel = document.createElement('button');
   cancel.className = 'submit-btn cancel';
@@ -97,9 +94,18 @@ const newTask = () => {
     const task = createtask(
       taskName.value, taskdescription.value, dueDate.value, priorityList.value,
     );
-    const taskers = JSON.parse(localStorage.getItem('todos')) || [];
-    taskers.push(task);
-    localStorage.setItem('todos', JSON.stringify(taskers));
+    const arr = JSON.parse(localStorage.getItem('projects'))
+    for (let index = 0; index < arr.length; index+=1) {
+      // const title = document.querySelector('.project-name');
+      // console.log(title.textContent);
+      if (Object.keys(arr[index])[0] === 'Project') {
+       
+        arr[index]['Project'][0]["todos"].push(task);
+
+      }
+      
+    };
+    localStorage.setItem('projects', JSON.stringify(arr));
   });
 
   taskForm.appendChild(headTag);
@@ -116,7 +122,15 @@ const newTask = () => {
   const disableButton = document.getElementById('new-task');
   disableButton.removeEventListener('click', newTask);
 };
+const getTasks = (projectname) => {
+  const availableProjects = JSON.parse(localStorage.getItem('projects') )|| [];
+  const project = availableProjects.find(item => item[`${projectname}`])
+  const todos = project[projectname][0]['todos'] || [];
+  const done = project[projectname][1]['done'] || [];
+  todos.forEach(elem => todoCard(elem,'#target'))
+  done.forEach(elem =>  todoCard(elem,'.done'))
 
+}
 const main = () => {
   const todoItemsSection = document.createElement('div');
   todoItemsSection.className = 'main';
@@ -128,8 +142,7 @@ const main = () => {
   const toDo = document.createElement('div');
   toDo.className = 'toDo';
   toDo.id = 'toDo';
-  // Section Headers
-  // ToDo section
+
   const toDoHeader = document.createElement('div');
   toDoHeader.className = 'main-header';
 
@@ -151,7 +164,6 @@ const main = () => {
   toDo.appendChild(newtoDo);
   toDo.appendChild(todoCardsList);
 
-  // Done
   const done = document.createElement('div');
   done.className = 'done';
 
@@ -175,7 +187,7 @@ const main = () => {
   const content = document.querySelector('#content');
   content.appendChild(todoItemsSection);
 };
-const todoCard = (todo, target) => {
+export const todoCard = (todo, target) => {
   const todoItem = document.createElement('li');
   todoItem.className = 'todo-item';
   todoItem.draggable = 'true';
@@ -244,12 +256,7 @@ const todoCard = (todo, target) => {
   const todoCardsList = document.querySelector(`${target}`);
   todoCardsList.appendChild(todoItem);
 };
-const populatetoDosList = (items, target) => {
-  const obj = JSON.parse(localStorage.getItem(`${items}`) || []);
-  for (let i = 0; i < obj.length; i += 1) {
-    todoCard(obj[i], `${target}`);
-  }
-};
+
 const createpage = () => {
   const sidebar = document.createElement('div');
   sidebar.className = 'side-bar';
@@ -267,6 +274,17 @@ const createpage = () => {
   addIcon.addEventListener('click', newProjectForm);
 
   headerText.textContent = 'Projects';
+  
+  const display = document.createElement('div');
+  const names = getProjects();
+  names.forEach(name => {
+    const title = document.createElement('p');
+    title.className = 'project-name';
+    title.textContent = name;
+    display.appendChild(title);
+
+  })
+  projectView.appendChild(display);
   projectIntro.appendChild(headerText);
   projectIntro.appendChild(addIcon);
   projectView.appendChild(projectIntro);
@@ -277,8 +295,7 @@ const createpage = () => {
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  populatetoDosList('todos', '#target');
-  populatetoDosList('done', '.done');
+  getTasks('Project');
 };
 
 export default createpage;
