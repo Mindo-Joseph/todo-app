@@ -1,6 +1,6 @@
 
 import { createtask, deleteTask } from './taskcreation';
-import {newProject,getProjects} from './test';
+import {newProject,getProjects,addNameToTopOfQueue,getCurrentProjectName} from './test';
 const clearSection = () => {
   const content = document.querySelector('#target');
   while (content.firstChild) {
@@ -216,18 +216,23 @@ export const todoCard = (todo, target) => {
   checkbox.setAttribute('type', 'checkbox');
   checkbox.addEventListener('change', (event) => {
     if (event.target.checked) {
-      const todos = JSON.parse(localStorage.getItem('todos')) || [];
-      for (let i = 0; i < todos.length; i += 1) {
-        if (todos[i].taskname === title.textContent) {
-          const done = JSON.parse(localStorage.getItem('done')) || [];
-          done.push(todos[i]);
-          localStorage.setItem('done', JSON.stringify(done));
-          todos.splice(i, 1);
-          localStorage.setItem('todos', JSON.stringify(todos));
-        }
-      }
-      const done = document.querySelector('.done');
-      done.appendChild(todoItem);
+      // const projects = getProjects();
+      // for (let index = 0; index < projects.length; index+=1) {
+      //   if ()
+        
+      // }
+      // const todos = JSON.parse(localStorage.getItem('projects')) || [];
+      // for (let i = 0; i < todos.length; i += 1) {
+      //   if (todos[i].taskname === title.textContent) {
+      //     const done = JSON.parse(localStorage.getItem('done')) || [];
+      //     done.push(todos[i]);
+      //     localStorage.setItem('done', JSON.stringify(done));
+      //     todos.splice(i, 1);
+      //     localStorage.setItem('todos', JSON.stringify(todos));
+      //   }
+      // }
+      // const done = document.querySelector('.done');
+      // done.appendChild(todoItem);
       // const list = document.querySelector('.todo-list');
       // list.removeChild(todoItem);
     }
@@ -275,30 +280,37 @@ const createpage = () => {
 
   headerText.textContent = 'Projects';
   
-  const display = document.createElement('div');
+  const displayProjects = document.createElement('div');
+  displayProjects.className = 'projectsWrapper';
   const names = getProjects();
   names.forEach(name => {
     const title = document.createElement('button');
     title.className = 'project-name';
     title.textContent = name;
-    display.appendChild(title);
+    displayProjects.appendChild(title);
 
   })
-  const projectList = document.createElement('div');
-  projectList.className = 'projectList';
 
   projectIntro.appendChild(headerText);
   projectIntro.appendChild(addIcon);
   projectView.appendChild(projectIntro);
-  projectView.appendChild(display);
-  const navigation = document.createElement('div');
-  navigation.className = 'navigation';
-
+  projectView.appendChild(displayProjects);
+  
+  
+  
   const content = document.querySelector('#content');
   content.appendChild(sidebar);
   content.appendChild(projectView);
   main();
-  getTasks('Project');
+  const buttons = document.querySelectorAll('.project-name');
+  buttons.forEach(function(currentBtn){
+    currentBtn.addEventListener('click', () => {
+      addNameToTopOfQueue(currentBtn.textContent)
+      location.reload();
+    })
+  });
+ 
+  getTasks(getCurrentProjectName());
 };
 
 export default createpage;

@@ -9,12 +9,23 @@
 // ];
 // // console.log(projects[0]["projo1"][1]['done'].length);
 // console.log(JSON.stringify(projects));
+const addNameToTopOfQueue = (name) => {
+  const namesArray = JSON.parse(localStorage.getItem('names')) || [];
+  namesArray.unshift(name);
+  localStorage.setItem('names',JSON.stringify(namesArray))
+
+}
+const getCurrentProjectName = () => {
+  const namesArray = JSON.parse(localStorage.getItem('names')) || [];
+  return namesArray[0];
+}
 const newProject = (name) => {
     let project = {};
     project[name] = [{'todos':[]},{'done':[]}];
     const projectss = JSON.parse(localStorage.getItem('projects')) || [];
     projectss.push(project)
     localStorage.setItem('projects',JSON.stringify(projectss));
+    addNameToTopOfQueue(name);
 }
 
 // newProject("projo")
@@ -31,4 +42,4 @@ const getProjects = () => {
   const projectNames = availableProjects.flatMap(item => Object.keys(item));
   return projectNames
 }
-export {newProject,getProjects};
+export {newProject,getProjects,addNameToTopOfQueue,getCurrentProjectName};
