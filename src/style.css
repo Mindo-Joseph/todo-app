@@ -130,7 +130,7 @@ textarea {
   flex: 50%;
 }
 
-.new-task {
+.new-task,.project-name {
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;

@@ -278,16 +278,19 @@ const createpage = () => {
   const display = document.createElement('div');
   const names = getProjects();
   names.forEach(name => {
-    const title = document.createElement('p');
+    const title = document.createElement('button');
     title.className = 'project-name';
     title.textContent = name;
     display.appendChild(title);
 
   })
-  projectView.appendChild(display);
+  const projectList = document.createElement('div');
+  projectList.className = 'projectList';
+
   projectIntro.appendChild(headerText);
   projectIntro.appendChild(addIcon);
   projectView.appendChild(projectIntro);
+  projectView.appendChild(display);
   const navigation = document.createElement('div');
   navigation.className = 'navigation';
 
