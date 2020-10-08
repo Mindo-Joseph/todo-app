@@ -98,9 +98,9 @@ const newTask = () => {
     for (let index = 0; index < arr.length; index+=1) {
       // const title = document.querySelector('.project-name');
       // console.log(title.textContent);
-      if (Object.keys(arr[index])[0] === 'Project') {
+      if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
        
-        arr[index]['Project'][0]["todos"].push(task);
+        arr[index][getCurrentProjectName()][0]["todos"].push(task);
 
       }
       
@@ -216,12 +216,7 @@ export const todoCard = (todo, target) => {
   checkbox.setAttribute('type', 'checkbox');
   checkbox.addEventListener('change', (event) => {
     if (event.target.checked) {
-      // const projects = getProjects();
-      // for (let index = 0; index < projects.length; index+=1) {
-      //   if ()
-        
-      // }
-      // const todos = JSON.parse(localStorage.getItem('projects')) || [];
+      // const projects = JSON.parse(localStorage.getItem('projects')) || [];
       // for (let i = 0; i < todos.length; i += 1) {
       //   if (todos[i].taskname === title.textContent) {
       //     const done = JSON.parse(localStorage.getItem('done')) || [];
@@ -231,8 +226,29 @@ export const todoCard = (todo, target) => {
       //     localStorage.setItem('todos', JSON.stringify(todos));
       //   }
       // }
-      // const done = document.querySelector('.done');
-      // done.appendChild(todoItem);
+      const arr = JSON.parse(localStorage.getItem('projects'))
+      for (let index = 0; index < arr.length; index+=1) {
+        if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
+       
+          const tasks = arr[index][getCurrentProjectName()][0]["todos"];
+          for (let i = 0; i < tasks.length; i += 1) {
+            if (tasks[i].taskname === title.textContent){
+                const done = arr[index][getCurrentProjectName()][1]["done"];
+                done.push(tasks[i]);
+                tasks.splice(i,1);
+                localStorage.setItem('projects', JSON.stringify(arr));
+                location.reload();
+
+            }
+   
+          }
+  
+        }
+        
+    };
+     
+      const done = document.querySelector('.done');
+      done.appendChild(todoItem);
       // const list = document.querySelector('.todo-list');
       // list.removeChild(todoItem);
     }
