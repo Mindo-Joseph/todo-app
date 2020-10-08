@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 * {
   box-sizing: border-box;
 }
@@ -52,7 +53,8 @@ li {
   margin-left: 1em;
 }
 
-.form, .todo-item {
+.form,
+.todo-item {
   max-width: 30rem;
   margin: 0.5em;
   padding: 1rem;
@@ -67,7 +69,10 @@ input {
   margin-bottom: 0.75em;
 }
 
-[type="text"], [type="date"], select, textarea {
+[type="text"],
+[type="date"],
+select,
+textarea {
   display: block;
   padding: 0.5rem;
   background: transparent;
@@ -125,7 +130,8 @@ input {
   flex: 50%;
 }
 
-.new-task, .project-name {
+.new-task,
+.project-name {
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
@@ -172,6 +178,6 @@ ul {
   margin-right: 1em;
 }
 
-.action>* {
+.action > * {
   padding-right: 0.5em;
 }
