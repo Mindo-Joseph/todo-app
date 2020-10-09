@@ -26,6 +26,7 @@ const newProject = (name) => {
 const checkForEmptyStorage = () => {
   if (localStorage.length === 0) {
     createDefaultProject();
+    window.location.reload();
   }
 };
 const getProjects = () => {
