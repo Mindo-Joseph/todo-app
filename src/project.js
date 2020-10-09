@@ -15,13 +15,16 @@ const createDefaultProject = () => {
   localStorage.setItem('projects', JSON.stringify(projects));
   addNameToTopOfQueue('Default');
 };
-const newProject = (name) => {
-  const project = {};
-  project[name] = [{ todos: [] }, { done: [] }];
-  const projectss = JSON.parse(localStorage.getItem('projects')) || [];
-  projectss.push(project);
-  localStorage.setItem('projects', JSON.stringify(projectss));
-  addNameToTopOfQueue(name);
+const newProject = (projName) => {
+  const name = projName.trim();
+  if (name && name.length > 0) {
+    const project = {};
+    project[name] = [{ todos: [] }, { done: [] }];
+    const projectss = JSON.parse(localStorage.getItem('projects')) || [];
+    projectss.push(project);
+    localStorage.setItem('projects', JSON.stringify(projectss));
+    addNameToTopOfQueue(name);
+  }
 };
 const checkForEmptyStorage = () => {
   if (localStorage.length === 0) {

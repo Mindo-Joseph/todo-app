@@ -27,7 +27,9 @@ const newProjectForm = () => {
 
   const name = document.createElement('input');
   name.setAttribute('type', 'text');
-  name.setAttribute('placeholder', 'project name');
+  name.setAttribute('placeholder', 'Project name');
+  name.required = true;
+  name.pattern = '^[a-zA-Z1-9].*';
   const projectbtns = document.createElement('div');
   projectbtns.className = 'projectbtns';
   const submit = document.createElement('button');
@@ -93,15 +95,20 @@ const newTask = () => {
   submit.textContent = 'Create';
   submit.addEventListener('click', () => {
     const task = createtask(
-      taskName.value, taskdescription.value, dueDate.value, priorityList.value,
+      taskName.value,
+      taskdescription.value,
+      dueDate.value,
+      priorityList.value,
     );
-    const arr = JSON.parse(localStorage.getItem('projects'));
-    for (let index = 0; index < arr.length; index += 1) {
-      if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
-        arr[index][getCurrentProjectName()][0].todos.push(task);
+    if (task !== null) {
+      const arr = JSON.parse(localStorage.getItem('projects'));
+      for (let index = 0; index < arr.length; index += 1) {
+        if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
+          arr[index][getCurrentProjectName()][0].todos.push(task);
+        }
       }
+      localStorage.setItem('projects', JSON.stringify(arr));
     }
-    localStorage.setItem('projects', JSON.stringify(arr));
   });
 
   taskForm.appendChild(headTag);

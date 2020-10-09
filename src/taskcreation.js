@@ -1,14 +1,22 @@
+/* eslint-disable no-alert */
 import { getCurrentProjectName } from './project';
 
 export const createtask = (taskname, description, date, priority) => {
-  const todo = {
-    taskname,
-    description,
-    date,
-    priority,
-    id: Date.now(),
-  };
-  return todo;
+  const name = taskname.trim();
+  const desc = description.trim();
+  const due = date.trim();
+  const level = priority.trim();
+  if (name && desc && due && level) {
+    const todo = {
+      taskname: name,
+      description: desc,
+      date: due,
+      priority: level,
+      id: Date.now(),
+    };
+    return todo;
+  }
+  return alert('All fields must be completed');
 };
 export const deleteTask = (title) => {
   const arr = JSON.parse(localStorage.getItem('projects'));
