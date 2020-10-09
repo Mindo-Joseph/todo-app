@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-cycle
+import { createDefaultTask } from './taskcreation';
+
 const addNameToTopOfQueue = (name) => {
   const namesArray = JSON.parse(localStorage.getItem('names')) || [];
   namesArray.unshift(name);
@@ -14,6 +17,7 @@ const createDefaultProject = () => {
   projects.push(project);
   localStorage.setItem('projects', JSON.stringify(projects));
   addNameToTopOfQueue('Default');
+  createDefaultTask();
 };
 const newProject = (projName) => {
   const name = projName.trim();

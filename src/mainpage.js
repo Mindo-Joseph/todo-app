@@ -1,4 +1,6 @@
-import { createtask, deleteTask, markTaskAsDone } from './taskcreation';
+import {
+  createtask, deleteTask, markTaskAsDone,
+} from './taskcreation';
 import {
   newProject, getProjects, addNameToTopOfQueue, getCurrentProjectName, checkForEmptyStorage,
 } from './project';

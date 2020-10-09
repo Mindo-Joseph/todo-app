@@ -1,7 +1,8 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-alert */
 import { getCurrentProjectName } from './project';
 
-export const createtask = (taskname, description, date, priority) => {
+const createtask = (taskname, description, date, priority) => {
   const name = taskname.trim();
   const desc = description.trim();
   const due = date.trim();
@@ -18,7 +19,7 @@ export const createtask = (taskname, description, date, priority) => {
   }
   return alert('All fields must be completed');
 };
-export const deleteTask = (title) => {
+const deleteTask = (title) => {
   const arr = JSON.parse(localStorage.getItem('projects'));
   for (let index = 0; index < arr.length; index += 1) {
     if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
@@ -43,7 +44,7 @@ export const deleteTask = (title) => {
   }
   return false;
 };
-export const markTaskAsDone = (taskname) => {
+const markTaskAsDone = (taskname) => {
   const arr = JSON.parse(localStorage.getItem('projects'));
   for (let index = 0; index < arr.length; index += 1) {
     if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
@@ -60,4 +61,12 @@ export const markTaskAsDone = (taskname) => {
     }
   }
 };
-export default createtask;
+const createDefaultTask = () => {
+  const task = createtask('Default Task', 'Some default task', '2020-11-10', 'High');
+  const arr = JSON.parse(localStorage.getItem('projects'));
+  arr[0].Default[0].todos.push(task);
+  localStorage.setItem('projects', JSON.stringify(arr));
+};
+export {
+  createtask, markTaskAsDone, deleteTask, createDefaultTask,
+};
