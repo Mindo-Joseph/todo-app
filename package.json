@@ -52,7 +52,8 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
     "setupFiles": [
-      "jest-localstorage-mock"
+      "jest-localstorage-mock",
+      "/home/joe/Desktop/JS/todo-app/src/tests/localstoragemock.js"
     ]
   }
 }
