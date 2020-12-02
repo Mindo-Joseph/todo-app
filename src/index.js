@@ -1,4 +1,4 @@
-import './style.css';
 import createpage from './mainpage';
+import './style.css';
 
 createpage();

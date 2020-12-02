@@ -25,9 +25,9 @@ const deleteTask = (title) => {
     if (Object.keys(arr[index])[0] === getCurrentProjectName()) {
       const { todos } = arr[index][getCurrentProjectName()][0];
       const { done } = arr[index][getCurrentProjectName()][1];
-      if (todos.some((task) => task.taskname === title.textContent)) {
+      if (todos.some((task) => task.taskname === title)) {
         const idx = todos.findIndex(
-          (task) => task.taskname === title.textContent,
+          (task) => task.taskname === title,
         );
 
         todos.splice(idx, 1);
@@ -35,14 +35,14 @@ const deleteTask = (title) => {
         window.location.reload();
         return false;
       }
-      const idx = done.findIndex((task) => task.taskname === title.textContent);
+      const idx = done.findIndex((task) => task.taskname === title);
       done.splice(idx, 1);
       localStorage.setItem('projects', JSON.stringify(arr));
       window.location.reload();
       return false;
     }
   }
-  return false;
+  return arr;
 };
 const markTaskAsDone = (taskname) => {
   const arr = JSON.parse(localStorage.getItem('projects'));
