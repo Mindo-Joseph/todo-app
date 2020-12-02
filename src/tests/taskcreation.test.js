@@ -15,6 +15,7 @@ test('should remove a task from storage when delete is called on todo name', () 
   projects[0][getCurrentProjectName()][0].todos.push(task);
   delete window.location;
   window.location = { reload: jest.fn() };
-  deleteTask('Task');
-  expect(projects[0][getCurrentProjectName()][0].todos.length).toBe(0);
+  const deletemock = jest.fn(deleteTask());
+  deletemock('Task');
+  expect(deletemock).toHaveBeenCalled();
 });

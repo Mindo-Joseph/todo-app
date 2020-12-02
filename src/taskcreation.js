@@ -33,13 +33,13 @@ const deleteTask = (title) => {
         todos.splice(idx, 1);
         localStorage.setItem('projects', JSON.stringify(arr));
         window.location.reload();
-        return arr;
+        return false;
       }
       const idx = done.findIndex((task) => task.taskname === title);
       done.splice(idx, 1);
       localStorage.setItem('projects', JSON.stringify(arr));
       window.location.reload();
-      return arr;
+      return false;
     }
   }
   return arr;
