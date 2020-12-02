@@ -150,7 +150,7 @@ const todoCard = (todo, target) => {
   taskDelete.appendChild(icon);
   taskDelete.id = 'deletebtn';
   taskDelete.addEventListener('click', () => {
-    deleteTask(title);
+    deleteTask(title.textContent);
   });
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');

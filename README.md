@@ -20,6 +20,7 @@ The main goal of this project is for the student to show the understanding of Si
 ![Create Task](./src/img/createTask.png)
 ![Completed-Task](src/img/completed.png)
 
+
 ## Live Link
 [To-Do](https://todo-app-tan.vercel.app/)
 
@@ -31,7 +32,7 @@ The main goal of this project is for the student to show the understanding of Si
 * Checkout to the feature branch by ```git checkout feature-todoList```
 * Install dependencies by running ```npm i``` in your terminal
 * Run webpack build by using the following command ```npm run build```
-* 
+  
 
 
 ### Usage
@@ -39,13 +40,14 @@ The main goal of this project is for the student to show the understanding of Si
 Once you have installed dependencies and run webpack build command  open ```dist/index.html``` in your browser 
 
 
-
+### Tests
+To run tests open your terminal and run `npm run test`
 
 ### Built With
 
 * Javascript
 * Webpack
-
+* Jest
 ## Author
 
 
